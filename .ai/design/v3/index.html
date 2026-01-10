@@ -5,11 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jhoel Bagnasco - Full-Stack Developer</title>
-    <link rel="stylesheet" href="styles.css">
+    
+    <!-- 
+        CSS Architecture:
+        1. common.css - CSS variables, reset, base styles, utilities
+        2. background.css - Animated geometric shapes
+        3. sections.css - Section-specific component styles
+    -->
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="background.css">
+    <link rel="stylesheet" href="sections.css">
 </head>
 
-<body>
+<!-- 
+    Theme System:
+    - Uses data-theme attribute on body (values: "light" | "dark")
+    - Managed by script.js with localStorage persistence
+    - CSS custom properties update automatically based on data-theme
+-->
+<body data-theme="light">
 
+    <!-- 
+        Geometric Shapes Background:
+        - Decorative animated shapes (squares with borders)
+        - Fixed position, behind all content (z-index: -1)
+        - Floating animation defined in background.css
+        - aria-hidden="true" to exclude from screen readers
+    -->
     <div class="geometric-shapes" aria-hidden="true">
         <div class="shape shape-large shape-1"></div>
         <div class="shape shape-large shape-2"></div>
@@ -21,6 +43,12 @@
         <div class="shape shape-small shape-13"></div>
     </div>
 
+    <!-- 
+        Floating Controls:
+        - Fixed position in top-right corner
+        - Language selector (EN/PT) - currently placeholder
+        - Theme toggle button (light/dark mode)
+    -->
     <div class="floating-controls">
         <select class="language-select" aria-label="Select language">
             <option value="en">🇺🇸 EN</option>
@@ -38,7 +66,22 @@
         </button>
     </div>
 
+    <!-- 
+        Main Layout:
+        - Desktop: Two-column flexbox layout (hero + work sidebar)
+        - Mobile: Stacked sections with work sidebar on top
+        - Max-width: 1200px, centered with auto margins
+        - Work sidebar: Fixed 450px width on desktop
+    -->
     <main class="layout-container main-content">
+        
+        <!-- 
+            Hero Section:
+            - Introduction with name, experience summary, tech stack
+            - Social links (blog, LinkedIn, GitHub, email)
+            - Text highlights with .hero__highlight class
+            - Gradient text effect on name using .text-gradient
+        -->
         <section class="hero section" id="hero">
             <div class="hero__container">
                 <span class="hero__handle">@bagnascojhoel</span>
@@ -117,125 +160,225 @@
             </div>
         </section>
 
+        <!-- 
+            Work Sidebar:
+            - Displays projects, articles, courses, and certifications
+            - Custom scrollbar styling (6px, minimal design)
+            - Collapsible cards with .work-item class
+            - Card states: collapsed (default) | expanded (.is-expanded)
+            - JavaScript handles toggle interaction (script.js)
+        -->
         <section class="work-sidebar section" id="work">
             <div class="work-sidebar__content">
                 <h2 class="work-sidebar__title">Work</h2>
-                <p class="work-sidebar__subtitle">Projects and articles reflecting my passion for clean code and
+                <p class="work-sidebar__subtitle">Projects, articles, and certifications reflecting my passion for clean code and
                     continuous learning</p>
 
-                <div class="projects-grid">
-                    <article class="project">
-                        <div class="project__header">
-                            <div class="project__header-content">
-                                <span class="project__type">Project</span>
-                                <h3 class="project__title">Kwik</h3>
-                            </div>
-                            <a href="https://github.com/bagnascojhoel/kwik-ecommerce" class="project__link"
-                                aria-label="View Kwik on GitHub">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <path d="M7 13L13 7M13 7H7M13 7V13" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </a>
-                        </div>
-                        <p class="project__description">Ecommerce application built with Java 17, Spring Boot, and
+                <!-- 
+                    Work Items Grid:
+                    - Flexbox column layout with 1.5 spacing units gap
+                    - Each .work-item card is clickable to expand/collapse
+                    - Collapsed: Shows type, title, footer (icon+count | link)
+                    - Expanded: Shows type, title, description, tags
+                -->
+                <div class="work-items-grid">
+                    
+                    <!-- 
+                        Work Item Card Structure (BEM naming):
+                        - .work-item: Container with hover/click states
+                        - .work-item__type: Content type label (xs, uppercase, primary color)
+                        - .work-item__title: Main heading (base font, mono)
+                        - .work-item__description: Details (hidden when collapsed)
+                        - .work-item__tags: Technology tags (hidden when collapsed)
+                        - .work-item__footer: Bottom bar with meta and link (hidden when expanded)
+                        - .work-item__meta: Icon + tag count
+                        - .work-item__link: External link button (far right)
+                        
+                        Icons:
+                        - Lucide "layers-2" icon for tag count visualization
+                        - Arrow icon for external links
+                        
+                        Interaction:
+                        - Click anywhere on card to toggle .is-expanded class
+                        - External link only works when card is expanded
+                        - Prevents navigation when collapsed
+                    -->
+                    <article class="work-item">
+                        <span class="work-item__type">Project</span>
+                        <h3 class="work-item__title">Kwik: Ecommerce Platform Using Latest of my Knowledge</h3>
+                        <p class="work-item__description">Ecommerce application built with Java 17, Spring Boot, and
                             Postgres. Management UI uses React, TypeScript, and Tailwind, deployed to AWS via GitHub
                             Actions.</p>
-                        <div class="project__tags">
+                        <div class="work-item__tags">
                             <span class="tag">Spring Boot</span>
                             <span class="tag">React</span>
                             <span class="tag">TypeScript</span>
                             <span class="tag">AWS</span>
                         </div>
-                    </article>
-
-                    <article class="project">
-                        <div class="project__header">
-                            <div class="project__header-content">
-                                <span class="project__type">Project</span>
-                                <h3 class="project__title">Portfolio Website</h3>
+                        <div class="work-item__footer">
+                            <div class="work-item__meta">
+                                <!-- Lucide layers-2 icon (14px) -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m16.02 12 5.48 3.13a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74L7.98 12"/>
+                                    <path d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74Z"/>
+                                </svg>
+                                <span class="work-item__tag-count">4 topics</span>
                             </div>
-                            <a href="https://github.com/bagnascojhoel/portfolio-website-monorepo" class="project__link"
-                                aria-label="View Portfolio on GitHub">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <a href="https://github.com/bagnascojhoel/kwik-ecommerce" class="work-item__link"
+                                aria-label="View Kwik on GitHub" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                                     <path d="M7 13L13 7M13 7H7M13 7V13" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </a>
                         </div>
-                        <p class="project__description">Monorepo including front-end, BFF, and blog. Built with
+                    </article>
+
+                    <article class="work-item">
+                        <span class="work-item__type">Project</span>
+                        <h3 class="work-item__title">This Website: Built from Design to Deployment with Context Engineering (Vibe Coding)</h3>
+                        <p class="work-item__description">Monorepo including front-end, BFF, and blog. Built with
                             Spring, Svelte, Java, and automated deployments via GitHub Actions.</p>
-                        <div class="project__tags">
+                        <div class="work-item__tags">
                             <span class="tag">Java</span>
                             <span class="tag">Svelte</span>
                             <span class="tag">Monorepo</span>
                         </div>
-                    </article>
-
-                    <article class="project">
-                        <div class="project__header">
-                            <div class="project__header-content">
-                                <span class="project__type">Project</span>
-                                <h3 class="project__title">NEditor</h3>
+                        <div class="work-item__footer">
+                            <div class="work-item__meta">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m16.02 12 5.48 3.13a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74L7.98 12"/>
+                                    <path d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74Z"/>
+                                </svg>
+                                <span class="work-item__tag-count">3 topics</span>
                             </div>
-                            <a href="https://github.com/bagnascojhoel/neditor" class="project__link"
-                                aria-label="View NEditor on GitHub">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <a href="https://github.com/bagnascojhoel/portfolio-website-monorepo" class="work-item__link"
+                                aria-label="View Portfolio on GitHub" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                                     <path d="M7 13L13 7M13 7H7M13 7V13" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </a>
                         </div>
-                        <p class="project__description">A Rich Text Editor built with React and Slate for flexible
-                            content editing.</p>
-                        <div class="project__tags">
+                    </article>
+
+                    <article class="work-item">
+                        <span class="work-item__type">Course</span>
+                        <h3 class="work-item__title">Clean Code & Clean Architecture: Detailed Course on Complex Software Design Strategies</h3>
+                        <p class="work-item__description">Code implemented while doing a course on Clean Code, Clean Architecture, Design Patterns, DDD, and TDD written in node.</p>
+                        <div class="work-item__tags">
                             <span class="tag">React</span>
                             <span class="tag">Slate</span>
                         </div>
-                    </article>
-
-                    <article class="project">
-                        <div class="project__header">
-                            <div class="project__header-content">
-                                <span class="project__type">Project</span>
-                                <h3 class="project__title">Kwik Chat API</h3>
+                        <div class="work-item__footer">
+                            <div class="work-item__meta">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m16.02 12 5.48 3.13a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74L7.98 12"/>
+                                    <path d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74Z"/>
+                                </svg>
+                                <span class="work-item__tag-count">2 topics</span>
                             </div>
-                            <a href="https://github.com/bagnascojhoel/kwik-chat-api" class="project__link"
-                                aria-label="View Kwik Chat API on GitHub">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <a href="https://github.com/bagnascojhoel/neditor" class="work-item__link"
+                                aria-label="View NEditor on GitHub" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                                     <path d="M7 13L13 7M13 7H7M13 7V13" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </a>
                         </div>
-                        <p class="project__description">Python API for LLM-based chat interactions, using Flask and
+                    </article>
+
+                    <article class="work-item">
+                        <span class="work-item__type">Project</span>
+                        <h3 class="work-item__title">Kwik Chat API: Chat Interface with LLMs on Python</h3>
+                        <p class="work-item__description">Python API for LLM-based chat interactions, using Flask and
                             clean architecture, deployed on Fly.io.</p>
-                        <div class="project__tags">
+                        <div class="work-item__tags">
                             <span class="tag">Python</span>
                             <span class="tag">Flask</span>
                             <span class="tag">Clean Architecture</span>
                         </div>
-                    </article>
-
-                    <article class="project">
-                        <div class="project__header">
-                            <div class="project__header-content">
-                                <span class="project__type">Article</span>
-                                <h3 class="project__title">Compiling a Spring Boot Project to a Native Image</h3>
+                        <div class="work-item__footer">
+                            <div class="work-item__meta">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m16.02 12 5.48 3.13a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74L7.98 12"/>
+                                    <path d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74Z"/>
+                                </svg>
+                                <span class="work-item__tag-count">3 topics</span>
                             </div>
-                            <a href="#" class="project__link" aria-label="Read article">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <a href="https://github.com/bagnascojhoel/kwik-chat-api" class="work-item__link"
+                                aria-label="View Kwik Chat API on GitHub" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                                     <path d="M7 13L13 7M13 7H7M13 7V13" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </a>
                         </div>
-                        <p class="project__description">An in-depth guide on optimizing Spring Boot applications for
+                    </article>
+
+                    <article class="work-item">
+                        <span class="work-item__type">Article</span>
+                        <h3 class="work-item__title">Compiling a Spring Boot Project to a Native Image</h3>
+                        <p class="work-item__description">An in-depth guide on optimizing Spring Boot applications for
                             faster startup and lower memory usage using native images.</p>
-                        <div class="project__tags">
+                        <div class="work-item__tags">
                             <span class="tag">Spring Boot</span>
                             <span class="tag">Native Image</span>
                             <span class="tag">Performance</span>
+                        </div>
+                        <div class="work-item__footer">
+                            <div class="work-item__meta">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m16.02 12 5.48 3.13a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74L7.98 12"/>
+                                    <path d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74Z"/>
+                                </svg>
+                                <span class="work-item__tag-count">3 topics</span>
+                            </div>
+                            <a href="#" class="work-item__link"
+                                aria-label="Read article" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                                    <path d="M7 13L13 7M13 7H7M13 7V13" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="work-item">
+                        <span class="work-item__type">Certification</span>
+                        <h3 class="work-item__title">Oracle Certified Professional: Java SE 11 Developer</h3>
+                        <p class="work-item__description">Professional-level certification demonstrating comprehensive knowledge of Java SE 11, including language fundamentals, object-oriented programming, collections, streams, and advanced Java features.</p>
+                        <div class="work-item__tags">
+                            <span class="tag">Java</span>
+                            <span class="tag">Oracle</span>
+                        </div>
+                        <div class="work-item__footer">
+                            <div class="work-item__meta">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m16.02 12 5.48 3.13a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74L7.98 12"/>
+                                    <path d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74Z"/>
+                                </svg>
+                                <span class="work-item__tag-count">2 topics</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="work-item">
+                        <span class="work-item__type">Certification</span>
+                        <h3 class="work-item__title">AWS Certified Cloud Practitioner</h3>
+                        <p class="work-item__description">Foundational certification validating overall understanding of AWS Cloud, including core AWS services, security, architecture, pricing, and support.</p>
+                        <div class="work-item__tags">
+                            <span class="tag">AWS</span>
+                            <span class="tag">Cloud</span>
+                        </div>
+                        <div class="work-item__footer">
+                            <div class="work-item__meta">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m16.02 12 5.48 3.13a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74L7.98 12"/>
+                                    <path d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74Z"/>
+                                </svg>
+                                <span class="work-item__tag-count">2 topics</span>
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -251,23 +394,40 @@
                     <div class="timeline-item">
                         <div class="timeline-item__marker"></div>
                         <div class="timeline-item__content">
-                            <p class="timeline-item__period">2020 - Present</p>
-                            <h3 class="timeline-item__title">Full-Stack Developer</h3>
-                            <p class="timeline-item__company">Company X</p>
-                            <p class="timeline-item__description">Developed and maintained full-stack applications
-                                using Java, Spring, React, and TypeScript. Implemented CI/CD pipelines and deployed
-                                to AWS.</p>
+                            <p class="timeline-item__period">December 2024 - Present</p>
+                            <h3 class="timeline-item__title">Senior Software Developer</h3>
+                            <p class="timeline-item__company">ADP Brazil Labs</p>
+                            <p class="timeline-item__description">Working with Java 21 and Spring Boot, integrating the latest enterprise payroll engine with existing products and embedded MFEs.</p>
                         </div>
                     </div>
 
                     <div class="timeline-item">
                         <div class="timeline-item__marker"></div>
                         <div class="timeline-item__content">
-                            <p class="timeline-item__period">2018 - 2020</p>
+                            <p class="timeline-item__period">April 2024 - December 2024</p>
+                            <h3 class="timeline-item__title">Senior Full-Stack Developer</h3>
+                            <p class="timeline-item__company">Petlove</p>
+                            <p class="timeline-item__description">Enhanced a multi-tenancy ERP for Petlove and SaaS Clients. Maintained the legacy monolithic system and led its modernization with microservices using Java (8 & 11), Spring Boot, JSF, Vue 3, and Google Cloud Platform. Created an application to decouple the beta system from an overloaded legacy system, significantly reducing downtime. Drove cultural changes that reduced bugs in production and standardized API and UI practices.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-item__marker"></div>
+                        <div class="timeline-item__content">
+                            <p class="timeline-item__period">June 2022 - April 2024</p>
                             <h3 class="timeline-item__title">Backend Developer</h3>
-                            <p class="timeline-item__company">Company Y</p>
-                            <p class="timeline-item__description">Specialized in backend APIs with Java and Spring,
-                                focusing on event-driven architectures and database optimization.</p>
+                            <p class="timeline-item__company">ADP Brazil Labs</p>
+                            <p class="timeline-item__description">Developed microservices with Java 17 and Spring Boot using BDD, DDD, and Ports and Adapters architecture. Implemented a multi-language text search feature. Maintained Gradle build files and Concourse/Kubernetes/Helm files for CI. Worked on a global product with stakeholders across Canada, India, and the United States. Led the migration of an API Gateway with Spring Gateway and implemented an observability dashboard with SLOs.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-item__marker"></div>
+                        <div class="timeline-item__content">
+                            <p class="timeline-item__period">July 2021 - June 2022</p>
+                            <h3 class="timeline-item__title">Backend Developer</h3>
+                            <p class="timeline-item__company">CWI Software</p>
+                            <p class="timeline-item__description">Led the development of a real-time user-data analysis system for a telecom provider to understand user behavior on the customer page. Designed the architecture of a scalable and extensible messaging system.</p>
                         </div>
                     </div>
                 </div>
