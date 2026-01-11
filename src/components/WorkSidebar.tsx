@@ -2,6 +2,7 @@ import React from "react";
 import { WorkItemType } from "@/types/work";
 import { workItems as localWorkItems } from "@/data/work";
 import WorkItem from "./WorkItem";
+import { getTranslations } from "next-intl/server";
 
 async function getWorkItems(): Promise<WorkItemType[]> {
   // If we are in build time or server is not yet running, fetch will fail.
@@ -23,6 +24,7 @@ async function getWorkItems(): Promise<WorkItemType[]> {
 }
 
 const WorkSidebar = async () => {
+  const t = await getTranslations("Work");
   let workItems: WorkItemType[] = [];
   try {
     workItems = await getWorkItems();
@@ -37,9 +39,9 @@ const WorkSidebar = async () => {
     >
       <div className="md:p-8 md:pt-20 md:pb-10">
         <div className="flex flex-col gap-4 mb-8">
-          <h2 className="text-3xl font-bold font-mono text-foreground">Work</h2>
+          <h2 className="text-3xl font-bold font-mono text-foreground">{t("title")}</h2>
           <p className="text-muted-foreground leading-relaxed max-w-2xl">
-            Projects, articles, and certifications reflecting my passion for clean code and continuous learning
+            {t("subtitle")}
           </p>
         </div>
 

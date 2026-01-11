@@ -1,36 +1,40 @@
 import React from "react";
 import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const Hero = () => {
+  const t = useTranslations("Hero");
+
   return (
     <section className="pb-10" id="hero">
       <div className="flex flex-col gap-4">
         <span className="font-mono text-primary text-sm">@bagnascojhoel</span>
 
         <h1 className="text-4xl md:text-5xl font-bold font-mono">
-          Hey, I am <span className="text-gradient">Jhoel</span>
+          {t("greeting")} <span className="text-gradient">{t("name")}</span>
         </h1>
 
         <div className="flex flex-col gap-4 text-base md:text-lg leading-relaxed text-foreground max-w-2xl">
           <p>
-            I am a software engineer with more than{" "}
-            <span className="font-bold underline decoration-primary/30 underline-offset-4 decoration-2">
-              4 years of experience
-            </span>
-            , specialized in backend development.
+            {t.rich("experience", {
+              bold: (chunks) => (
+                <span className="font-bold underline decoration-primary/30 underline-offset-4 decoration-2">
+                  {chunks}
+                </span>
+              ),
+            })}
           </p>
 
           <p>
-            I have deep knowledge with{" "}
-            <span className="text-primary font-bold">Java and Spring</span> for cloud-native HTTP/REST APIs, with
-            production expertise in AWS, DDD, event-driven architecture, and CI/CD. I also know my way around Python and
-            Node.js as well as CI tools like Concourse and GitHub Actions.
+            {t.rich("stack1", {
+              tech: (chunks) => <span className="text-primary font-bold">{chunks}</span>,
+            })}
           </p>
 
           <p>
-            As a front-end developer, I exceed with{" "}
-            <span className="text-primary font-bold">React, Next.js, and Redux</span> while keeping an organized,
-            strongly typed, code base with TypeScript, ESLint, and Prettier.
+            {t.rich("stack2", {
+              tech: (chunks) => <span className="text-primary font-bold">{chunks}</span>,
+            })}
           </p>
         </div>
 
@@ -45,7 +49,7 @@ const Hero = () => {
               <ArrowUpRight size={18} />
             </div>
             <span className="font-mono text-sm underline decoration-border group-hover:decoration-primary underline-offset-4">
-              blog
+              {t("blog")}
             </span>
           </a>
 

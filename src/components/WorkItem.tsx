@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Layers, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { WorkItemType } from "@/types/work";
+import { useTranslations } from "next-intl";
 
 interface WorkItemProps {
   item: WorkItemType;
@@ -11,6 +12,7 @@ interface WorkItemProps {
 
 const WorkItem = ({ item }: WorkItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const t = useTranslations("Work");
 
   const toggleExpand = (e: React.MouseEvent) => {
     // If user clicks the link while expanded, don't toggle
@@ -86,7 +88,7 @@ const WorkItem = ({ item }: WorkItemProps) => {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 text-sm font-mono text-primary hover:underline"
               >
-                View on GitHub <ArrowUpRight size={14} />
+                {t("viewProject")} <ArrowUpRight size={14} />
               </a>
             </div>
           </motion.div>

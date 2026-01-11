@@ -1,44 +1,45 @@
 import React from "react";
+import { useTranslations } from "next-intl";
 
 const experiences = [
   {
-    period: "December 2024 - Present",
-    title: "Senior Software Developer",
+    id: "adp-senior",
+    period: "December 2024 - ",
+    titleKey: "items.adp-senior.title",
     company: "ADP Brazil Labs",
-    description:
-      "Working with Java 21 and Spring Boot, integrating the latest enterprise payroll engine with existing products and embedded MFEs.",
+    descriptionKey: "items.adp-senior.description",
   },
   {
+    id: "petlove",
     period: "April 2024 - December 2024",
-    title: "Senior Full-Stack Developer",
+    titleKey: "items.petlove.title",
     company: "Petlove",
-    description:
-      "Enhanced a multi-tenancy ERP for Petlove and SaaS Clients. Maintained the legacy monolithic system and led its modernization with microservices using Java (8 & 11), Spring Boot, JSF, Vue 3, and Google Cloud Platform.",
+    descriptionKey: "items.petlove.description",
   },
   {
+    id: "adp-backend",
     period: "June 2022 - April 2024",
-    title: "Backend Developer",
+    titleKey: "items.adp-backend.title",
     company: "ADP Brazil Labs",
-    description:
-      "Developed microservices with Java 17 and Spring Boot using BDD, DDD, and Ports and Adapters architecture. Implemented a multi-language text search feature.",
+    descriptionKey: "items.adp-backend.description",
   },
   {
+    id: "cwi",
     period: "July 2021 - June 2022",
-    title: "Backend Developer",
+    titleKey: "items.cwi.title",
     company: "CWI Software",
-    description:
-      "Led the development of a real-time user-data analysis system for a telecom provider to understand user behavior on the customer page.",
+    descriptionKey: "items.cwi.description",
   },
 ];
 
 const Experience = () => {
+  const t = useTranslations("Experience");
+
   return (
     <section id="experience" className="py-20">
       <div>
-        <h2 className="text-3xl font-bold font-mono text-foreground mb-2">Experience</h2>
-        <p className="text-lg text-muted-foreground mb-12 max-w-xl">
-          Building scalable solutions across different organizations
-        </p>
+        <h2 className="text-3xl font-bold font-mono text-foreground mb-2">{t("title")}</h2>
+        <p className="text-lg text-muted-foreground mb-12 max-w-xl">{t("subtitle")}</p>
 
         <div className="flex flex-col gap-12 sm:gap-16">
           {experiences.map((exp, index) => (
@@ -50,12 +51,14 @@ const Experience = () => {
                   <div className="absolute top-5 bottom-[-4rem] sm:bottom-[-5rem] w-0 border-l-[3px] border-dashed border-border" />
                 )}
               </div>
-              
+
               <div className="flex flex-col gap-1">
-                <p className="text-sm font-mono text-muted-foreground">{exp.period}</p>
-                <h3 className="text-xl font-bold font-mono text-foreground">{exp.title}</h3>
+                <p className="text-sm font-mono text-muted-foreground">
+                  {exp.id === "adp-senior" ? `${exp.period}${t("present")}` : exp.period}
+                </p>
+                <h3 className="text-xl font-bold font-mono text-foreground">{t(exp.titleKey)}</h3>
                 <p className="text-primary font-medium">{exp.company}</p>
-                <p className="text-muted-foreground leading-relaxed mt-2 max-w-2xl">{exp.description}</p>
+                <p className="text-muted-foreground leading-relaxed mt-2 max-w-2xl">{t(exp.descriptionKey)}</p>
               </div>
             </div>
           ))}

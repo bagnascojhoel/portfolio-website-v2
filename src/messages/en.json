@@ -1,0 +1,53 @@
+{
+  "Hero": {
+    "greeting": "Hey, I am",
+    "name": "Jhoel",
+    "experience": "I am a software engineer with more than <bold>4 years of experience</bold>, specialized in backend development.",
+    "stack1": "I have deep knowledge with <tech>Java and Spring</tech> for cloud-native HTTP/REST APIs, with production expertise in AWS, DDD, event-driven architecture, and CI/CD. I also know my way around Python and Node.js as well as CI tools like Concourse and GitHub Actions.",
+    "stack2": "As a front-end developer, I exceed with <tech>React, Next.js, and Redux</tech> while keeping an organized, strongly typed, code base with TypeScript, ESLint, and Prettier.",
+    "blog": "blog"
+  },
+  "Experience": {
+    "title": "Experience",
+    "subtitle": "Building scalable solutions across different organizations",
+    "present": "Present",
+    "items": {
+      "adp-senior": {
+        "title": "Senior Software Developer",
+        "description": "Working with Java 21 and Spring Boot, integrating the latest enterprise payroll engine with existing products and embedded MFEs."
+      },
+      "petlove": {
+        "title": "Senior Full-Stack Developer",
+        "description": "Enhanced a multi-tenancy ERP for Petlove and SaaS Clients. Maintained the legacy monolithic system and led its modernization with microservices using Java (8 & 11), Spring Boot, JSF, Vue 3, and Google Cloud Platform."
+      },
+      "adp-backend": {
+        "title": "Backend Developer",
+        "description": "Developed microservices with Java 17 and Spring Boot using BDD, DDD, and Ports and Adapters architecture. Implemented a multi-language text search feature."
+      },
+      "cwi": {
+        "title": "Backend Developer",
+        "description": "Led the development of a real-time user-data analysis system for a telecom provider to understand user behavior on the customer page."
+      }
+    }
+  },
+  "Contact": {
+    "title": "Let's Connect",
+    "subtitle": "Feel free to reach out for collaborations or just a friendly chat",
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "resume": "Resume"
+  },
+  "Work": {
+    "title": "Projects",
+    "subtitle": "Selection of my favorite projects",
+    "viewProject": "View Project"
+  },
+  "Footer": {
+    "madeWith": "made with",
+    "by": "by me"
+  },
+  "Common": {
+    "toggleTheme": "Toggle theme"
+  }
+}
