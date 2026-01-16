@@ -8,7 +8,7 @@ export const routing = defineRouting({
 
   // Used when no locale matches
   defaultLocale: DEFAULT_LOCALE,
-  localePrefix: 'as-needed',
+  localePrefix: 'always',
 });
 
 export const localeNames: Record<Locale, string> = {
